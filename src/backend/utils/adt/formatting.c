@@ -77,6 +77,7 @@
 
 #include "catalog/pg_collation.h"
 #include "catalog/pg_type.h"
+#include "common/int.h"
 #include "common/unicode_case.h"
 #include "common/unicode_category.h"
 #include "mb/pg_wchar.h"
@@ -4838,12 +4839,19 @@ do_to_timestamp(text *date_txt, text *fmt, Oid collid, bool std,
 		/* use first year of century */
 		if (tmfc.bc)
 			tmfc.cc = -tmfc.cc;
+
+        int64 value;
+        if (tmfc.cc >= 0)
+            tmfc.cc -= 1;
+
+        pg_mul_s64_overflow(tmfc.cc, 100, &value);
+
 		if (tmfc.cc >= 0)
 			/* +1 because 21st century started in 2001 */
-			tm->tm_year = (tmfc.cc - 1) * 100 + 1;
+			tm->tm_year = value + 1;
 		else
 			/* +1 because year == 599 is 600 BC */
-			tm->tm_year = tmfc.cc * 100 + 1;
+			tm->tm_year = value + 1;
 		fmask |= DTK_M(YEAR);
 	}
 
