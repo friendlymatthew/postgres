@@ -1,0 +1,286 @@
+2024-06-22 13:58:12.931 EDT [96501] LOG:  starting PostgreSQL 17beta1 on aarch64-apple-darwin23.4.0, compiled by Apple clang version 15.0.0 (clang-1500.3.9.4), 64-bit
+2024-06-22 13:58:12.934 EDT [96501] LOG:  listening on IPv6 address "::1", port 5432
+2024-06-22 13:58:12.934 EDT [96501] LOG:  listening on IPv4 address "127.0.0.1", port 5432
+2024-06-22 13:58:12.934 EDT [96501] LOG:  listening on Unix socket "/tmp/.s.PGSQL.5432"
+2024-06-22 13:58:12.937 EDT [96504] LOG:  database system was shut down at 2024-06-22 13:58:08 EDT
+2024-06-22 13:58:12.938 EDT [96501] LOG:  database system is ready to accept connections
+2024-06-22 13:59:42.755 EDT [96501] LOG:  received fast shutdown request
+2024-06-22 13:59:42.756 EDT [96501] LOG:  aborting any active transactions
+2024-06-22 13:59:42.756 EDT [96501] LOG:  background worker "logical replication launcher" (PID 96507) exited with exit code 1
+2024-06-22 13:59:42.756 EDT [96502] LOG:  shutting down
+2024-06-22 13:59:42.756 EDT [96502] LOG:  checkpoint starting: shutdown immediate
+2024-06-22 13:59:42.758 EDT [96502] LOG:  checkpoint complete: wrote 45 buffers (0.3%); 0 WAL file(s) added, 0 removed, 0 recycled; write=0.001 s, sync=0.001 s, total=0.002 s; sync files=11, longest=0.001 s, average=0.001 s; distance=259 kB, estimate=259 kB; lsn=0/1548798, redo lsn=0/1548798
+2024-06-22 13:59:42.759 EDT [96501] LOG:  database system is shut down
+2024-06-22 14:02:15.482 EDT [13939] LOG:  starting PostgreSQL 17beta1 on aarch64-apple-darwin23.4.0, compiled by Apple clang version 15.0.0 (clang-1500.3.9.4), 64-bit
+2024-06-22 14:02:15.484 EDT [13939] LOG:  listening on IPv6 address "::1", port 5432
+2024-06-22 14:02:15.484 EDT [13939] LOG:  listening on IPv4 address "127.0.0.1", port 5432
+2024-06-22 14:02:15.484 EDT [13939] LOG:  listening on Unix socket "/tmp/.s.PGSQL.5432"
+2024-06-22 14:02:15.486 EDT [13942] LOG:  database system was shut down at 2024-06-22 13:59:42 EDT
+2024-06-22 14:02:15.487 EDT [13939] LOG:  database system is ready to accept connections
+2024-06-22 14:02:47.871 EDT [13981] FATAL:  database "test" does not exist
+2024-06-22 14:04:28.028 EDT [14195] ERROR:  syntax error at or near "ls" at character 1
+2024-06-22 14:04:28.028 EDT [14195] STATEMENT:  ls -a
+	ls -l
+	ls
+	select 1
+	;
+2024-06-22 14:04:33.752 EDT [14195] ERROR:  syntax error at or near "ls" at character 1
+2024-06-22 14:04:33.752 EDT [14195] STATEMENT:  ls -a;
+2024-06-22 14:04:35.469 EDT [14195] ERROR:  syntax error at or near "ls" at character 1
+2024-06-22 14:04:35.469 EDT [14195] STATEMENT:  ls
+	;
+2024-06-22 14:05:21.487 EDT [14213] ERROR:  syntax error at or near "1" at character 1
+2024-06-22 14:05:21.487 EDT [14213] STATEMENT:  1 * 1;
+2024-06-22 14:07:15.490 EDT [13940] LOG:  checkpoint starting: time
+2024-06-22 14:08:53.535 EDT [13940] LOG:  checkpoint complete: wrote 975 buffers (6.0%); 0 WAL file(s) added, 0 removed, 0 recycled; write=98.017 s, sync=0.027 s, total=98.046 s; sync files=306, longest=0.003 s, average=0.001 s; distance=4466 kB, estimate=4466 kB; lsn=0/19A5418, redo lsn=0/19A5388
+2024-06-22 14:09:13.864 EDT [14213] ERROR:  date out of range: "100000000"
+2024-06-22 14:09:13.864 EDT [14213] STATEMENT:  SELECT to_date('100000000', 'CC');
+2024-06-22 14:09:25.603 EDT [14213] ERROR:  timestamp out of range
+2024-06-22 14:09:25.603 EDT [14213] STATEMENT:  SELECT to_timestamp('1000000000,999', 'Y,YYY');
+2024-06-22 14:09:34.639 EDT [14213] ERROR:  date field value out of range: -2147483648-01-01
+2024-06-22 14:09:34.639 EDT [14213] STATEMENT:  SELECT make_date(-2147483648, 1, 1);
+2024-06-22 14:10:43.094 EDT [14213] ERROR:  syntax error at or near "pg_proc" at character 1
+2024-06-22 14:10:43.094 EDT [14213] STATEMENT:  pg_proc SELECT * FROM pg_proc where prone = 'to_date'
+	;
+2024-06-22 14:11:00.285 EDT [14213] ERROR:  syntax error at or near "pgproc" at character 1
+2024-06-22 14:11:00.285 EDT [14213] STATEMENT:  pgproc SELECT * From pgproc where prone='to_date';
+2024-06-22 14:15:48.108 EDT [13939] LOG:  received fast shutdown request
+2024-06-22 14:15:48.108 EDT [13939] LOG:  aborting any active transactions
+2024-06-22 14:15:48.108 EDT [14213] FATAL:  terminating connection due to administrator command
+2024-06-22 14:15:48.111 EDT [13939] LOG:  background worker "logical replication launcher" (PID 13945) exited with exit code 1
+2024-06-22 14:15:48.111 EDT [13940] LOG:  shutting down
+2024-06-22 14:15:48.111 EDT [13940] LOG:  checkpoint starting: shutdown immediate
+2024-06-22 14:15:48.113 EDT [13940] LOG:  checkpoint complete: wrote 0 buffers (0.0%); 0 WAL file(s) added, 0 removed, 0 recycled; write=0.001 s, sync=0.001 s, total=0.002 s; sync files=0, longest=0.000 s, average=0.000 s; distance=0 kB, estimate=4020 kB; lsn=0/19A54C8, redo lsn=0/19A54C8
+2024-06-22 14:15:48.115 EDT [13939] LOG:  database system is shut down
+2024-06-22 14:25:32.472 EDT [22120] LOG:  starting PostgreSQL 17beta1 on aarch64-apple-darwin23.4.0, compiled by Apple clang version 15.0.0 (clang-1500.3.9.4), 64-bit
+2024-06-22 14:25:32.474 EDT [22120] LOG:  listening on IPv6 address "::1", port 5432
+2024-06-22 14:25:32.474 EDT [22120] LOG:  listening on IPv4 address "127.0.0.1", port 5432
+2024-06-22 14:25:32.475 EDT [22120] LOG:  listening on Unix socket "/tmp/.s.PGSQL.5432"
+2024-06-22 14:25:32.477 EDT [22123] LOG:  database system was shut down at 2024-06-22 14:15:48 EDT
+2024-06-22 14:25:32.479 EDT [22120] LOG:  database system is ready to accept connections
+2024-06-22 14:30:32.479 EDT [22121] LOG:  checkpoint starting: time
+2024-06-22 14:30:32.481 EDT [22121] LOG:  checkpoint complete: wrote 3 buffers (0.0%); 0 WAL file(s) added, 0 removed, 0 recycled; write=0.001 s, sync=0.001 s, total=0.003 s; sync files=2, longest=0.001 s, average=0.001 s; distance=0 kB, estimate=0 kB; lsn=0/19A55D0, redo lsn=0/19A5578
+2024-06-22 14:33:13.922 EDT [22120] LOG:  received fast shutdown request
+2024-06-22 14:33:13.922 EDT [22120] LOG:  aborting any active transactions
+2024-06-22 14:33:13.922 EDT [22120] LOG:  background worker "logical replication launcher" (PID 22126) exited with exit code 1
+2024-06-22 14:33:13.922 EDT [22121] LOG:  shutting down
+2024-06-22 14:33:13.923 EDT [22121] LOG:  checkpoint starting: shutdown immediate
+2024-06-22 14:33:13.923 EDT [22121] LOG:  checkpoint complete: wrote 0 buffers (0.0%); 0 WAL file(s) added, 0 removed, 0 recycled; write=0.001 s, sync=0.001 s, total=0.001 s; sync files=0, longest=0.000 s, average=0.000 s; distance=0 kB, estimate=0 kB; lsn=0/19A5680, redo lsn=0/19A5680
+2024-06-22 14:33:13.924 EDT [22120] LOG:  database system is shut down
+2024-06-22 14:33:18.560 EDT [24846] LOG:  starting PostgreSQL 17beta1 on aarch64-apple-darwin23.4.0, compiled by Apple clang version 15.0.0 (clang-1500.3.9.4), 64-bit
+2024-06-22 14:33:18.562 EDT [24846] LOG:  listening on IPv6 address "::1", port 5432
+2024-06-22 14:33:18.562 EDT [24846] LOG:  listening on IPv4 address "127.0.0.1", port 5432
+2024-06-22 14:33:18.562 EDT [24846] LOG:  listening on Unix socket "/tmp/.s.PGSQL.5432"
+2024-06-22 14:33:18.564 EDT [24849] LOG:  database system was shut down at 2024-06-22 14:33:13 EDT
+2024-06-22 14:33:18.566 EDT [24846] LOG:  database system is ready to accept connections
+2024-06-22 14:36:59.611 EDT [24980] FATAL:  lock file "postmaster.pid" already exists
+2024-06-22 14:36:59.611 EDT [24980] HINT:  Is another postmaster (PID 24846) running in data directory "/Users/matteo/Desktop/GARAGE/postgres/data"?
+2024-06-22 14:37:04.572 EDT [24846] LOG:  received fast shutdown request
+2024-06-22 14:37:04.573 EDT [24846] LOG:  aborting any active transactions
+2024-06-22 14:37:04.573 EDT [24846] LOG:  background worker "logical replication launcher" (PID 24852) exited with exit code 1
+2024-06-22 14:37:04.573 EDT [24847] LOG:  shutting down
+2024-06-22 14:37:04.573 EDT [24847] LOG:  checkpoint starting: shutdown immediate
+2024-06-22 14:37:04.574 EDT [24847] LOG:  checkpoint complete: wrote 3 buffers (0.0%); 0 WAL file(s) added, 0 removed, 0 recycled; write=0.001 s, sync=0.001 s, total=0.002 s; sync files=2, longest=0.001 s, average=0.001 s; distance=0 kB, estimate=0 kB; lsn=0/19A5730, redo lsn=0/19A5730
+2024-06-22 14:37:04.575 EDT [24846] LOG:  database system is shut down
+2024-06-22 14:37:06.392 EDT [25037] LOG:  starting PostgreSQL 17beta1 on aarch64-apple-darwin23.4.0, compiled by Apple clang version 15.0.0 (clang-1500.3.9.4), 64-bit
+2024-06-22 14:37:06.393 EDT [25037] LOG:  listening on IPv6 address "::1", port 5432
+2024-06-22 14:37:06.393 EDT [25037] LOG:  listening on IPv4 address "127.0.0.1", port 5432
+2024-06-22 14:37:06.394 EDT [25037] LOG:  listening on Unix socket "/tmp/.s.PGSQL.5432"
+2024-06-22 14:37:06.395 EDT [25040] LOG:  database system was shut down at 2024-06-22 14:37:04 EDT
+2024-06-22 14:37:06.397 EDT [25037] LOG:  database system is ready to accept connections
+2024-06-22 14:38:17.266 EDT [25037] LOG:  received fast shutdown request
+2024-06-22 14:38:17.266 EDT [25037] LOG:  aborting any active transactions
+2024-06-22 14:38:17.266 EDT [25069] FATAL:  terminating connection due to administrator command
+2024-06-22 14:38:17.266 EDT [25037] LOG:  background worker "logical replication launcher" (PID 25043) exited with exit code 1
+2024-06-22 14:38:17.267 EDT [25038] LOG:  shutting down
+2024-06-22 14:38:17.267 EDT [25038] LOG:  checkpoint starting: shutdown immediate
+2024-06-22 14:38:17.268 EDT [25038] LOG:  checkpoint complete: wrote 3 buffers (0.0%); 0 WAL file(s) added, 0 removed, 0 recycled; write=0.001 s, sync=0.001 s, total=0.002 s; sync files=2, longest=0.001 s, average=0.001 s; distance=0 kB, estimate=0 kB; lsn=0/19A57E0, redo lsn=0/19A57E0
+2024-06-22 14:38:17.269 EDT [25037] LOG:  database system is shut down
+2024-06-22 14:38:20.513 EDT [25136] LOG:  starting PostgreSQL 17beta1 on aarch64-apple-darwin23.4.0, compiled by Apple clang version 15.0.0 (clang-1500.3.9.4), 64-bit
+2024-06-22 14:38:20.515 EDT [25136] LOG:  listening on IPv6 address "::1", port 5432
+2024-06-22 14:38:20.515 EDT [25136] LOG:  listening on IPv4 address "127.0.0.1", port 5432
+2024-06-22 14:38:20.515 EDT [25136] LOG:  listening on Unix socket "/tmp/.s.PGSQL.5432"
+2024-06-22 14:38:20.517 EDT [25139] LOG:  database system was shut down at 2024-06-22 14:38:17 EDT
+2024-06-22 14:38:20.518 EDT [25136] LOG:  database system is ready to accept connections
+2024-06-22 14:39:08.656 EDT [25136] LOG:  received fast shutdown request
+2024-06-22 14:39:08.657 EDT [25136] LOG:  aborting any active transactions
+2024-06-22 14:39:08.657 EDT [25182] FATAL:  terminating connection due to administrator command
+2024-06-22 14:39:08.657 EDT [25136] LOG:  background worker "logical replication launcher" (PID 25142) exited with exit code 1
+2024-06-22 14:39:08.658 EDT [25137] LOG:  shutting down
+2024-06-22 14:39:08.658 EDT [25137] LOG:  checkpoint starting: shutdown immediate
+2024-06-22 14:39:08.659 EDT [25137] LOG:  checkpoint complete: wrote 3 buffers (0.0%); 0 WAL file(s) added, 0 removed, 0 recycled; write=0.001 s, sync=0.001 s, total=0.002 s; sync files=2, longest=0.001 s, average=0.001 s; distance=0 kB, estimate=0 kB; lsn=0/19A5890, redo lsn=0/19A5890
+2024-06-22 14:39:08.660 EDT [25136] LOG:  database system is shut down
+2024-06-22 14:39:12.088 EDT [26298] LOG:  starting PostgreSQL 17beta1 on aarch64-apple-darwin23.4.0, compiled by Apple clang version 15.0.0 (clang-1500.3.9.4), 64-bit
+2024-06-22 14:39:12.091 EDT [26298] LOG:  listening on IPv6 address "::1", port 5432
+2024-06-22 14:39:12.091 EDT [26298] LOG:  listening on IPv4 address "127.0.0.1", port 5432
+2024-06-22 14:39:12.091 EDT [26298] LOG:  listening on Unix socket "/tmp/.s.PGSQL.5432"
+2024-06-22 14:39:12.093 EDT [26301] LOG:  database system was shut down at 2024-06-22 14:39:08 EDT
+2024-06-22 14:39:12.094 EDT [26298] LOG:  database system is ready to accept connections
+2024-06-22 14:44:12.095 EDT [26299] LOG:  checkpoint starting: time
+2024-06-22 14:44:12.099 EDT [26299] LOG:  checkpoint complete: wrote 3 buffers (0.0%); 0 WAL file(s) added, 0 removed, 0 recycled; write=0.001 s, sync=0.001 s, total=0.005 s; sync files=2, longest=0.001 s, average=0.001 s; distance=0 kB, estimate=0 kB; lsn=0/19A5998, redo lsn=0/19A5940
+2024-06-22 14:45:03.769 EDT [26345] ERROR:  date out of range: "100000000"
+2024-06-22 14:45:03.769 EDT [26345] STATEMENT:  SELECT to_date('100000000', 'CC');
+2024-06-22 14:48:34.599 EDT [26298] LOG:  received fast shutdown request
+2024-06-22 14:48:34.599 EDT [26298] LOG:  aborting any active transactions
+2024-06-22 14:48:34.599 EDT [26345] FATAL:  terminating connection due to administrator command
+2024-06-22 14:48:34.600 EDT [26298] LOG:  background worker "logical replication launcher" (PID 26304) exited with exit code 1
+2024-06-22 14:48:34.600 EDT [26299] LOG:  shutting down
+2024-06-22 14:48:34.600 EDT [26299] LOG:  checkpoint starting: shutdown immediate
+2024-06-22 14:48:34.601 EDT [26299] LOG:  checkpoint complete: wrote 0 buffers (0.0%); 0 WAL file(s) added, 0 removed, 0 recycled; write=0.001 s, sync=0.000 s, total=0.001 s; sync files=0, longest=0.000 s, average=0.000 s; distance=0 kB, estimate=0 kB; lsn=0/19A5A48, redo lsn=0/19A5A48
+2024-06-22 14:48:34.602 EDT [26298] LOG:  database system is shut down
+2024-06-22 14:49:25.052 EDT [27388] LOG:  starting PostgreSQL 17beta1 on aarch64-apple-darwin23.4.0, compiled by Apple clang version 15.0.0 (clang-1500.3.9.4), 64-bit
+2024-06-22 14:49:25.054 EDT [27388] LOG:  listening on IPv6 address "::1", port 5432
+2024-06-22 14:49:25.054 EDT [27388] LOG:  listening on IPv4 address "127.0.0.1", port 5432
+2024-06-22 14:49:25.055 EDT [27388] LOG:  listening on Unix socket "/tmp/.s.PGSQL.5432"
+2024-06-22 14:49:25.058 EDT [27391] LOG:  database system was shut down at 2024-06-22 14:48:34 EDT
+2024-06-22 14:49:25.060 EDT [27388] LOG:  database system is ready to accept connections
+2024-06-22 14:49:41.878 EDT [27441] ERROR:  date out of range: "100000000"
+2024-06-22 14:49:41.878 EDT [27441] STATEMENT:  SELECT to_date('100000000', 'CC');
+2024-06-22 14:54:25.059 EDT [27389] LOG:  checkpoint starting: time
+2024-06-22 14:54:25.064 EDT [27389] LOG:  checkpoint complete: wrote 3 buffers (0.0%); 0 WAL file(s) added, 0 removed, 0 recycled; write=0.002 s, sync=0.001 s, total=0.006 s; sync files=2, longest=0.001 s, average=0.001 s; distance=0 kB, estimate=0 kB; lsn=0/19A5B50, redo lsn=0/19A5AF8
+2024-06-22 15:20:06.995 EDT [27441] ERROR:  timestamp out of range
+2024-06-22 15:20:06.995 EDT [27441] STATEMENT:  SELECT to_timestamp('1000000000,999', 'Y,YYY');
+2024-06-22 15:36:16.964 EDT [27388] LOG:  received fast shutdown request
+2024-06-22 15:36:16.964 EDT [27388] LOG:  aborting any active transactions
+2024-06-22 15:36:16.964 EDT [27441] FATAL:  terminating connection due to administrator command
+2024-06-22 15:36:16.965 EDT [27388] LOG:  background worker "logical replication launcher" (PID 27394) exited with exit code 1
+2024-06-22 15:36:16.965 EDT [27389] LOG:  shutting down
+2024-06-22 15:36:16.965 EDT [27389] LOG:  checkpoint starting: shutdown immediate
+2024-06-22 15:36:16.967 EDT [27389] LOG:  checkpoint complete: wrote 0 buffers (0.0%); 0 WAL file(s) added, 0 removed, 0 recycled; write=0.001 s, sync=0.000 s, total=0.002 s; sync files=0, longest=0.000 s, average=0.000 s; distance=0 kB, estimate=0 kB; lsn=0/19A5C00, redo lsn=0/19A5C00
+2024-06-22 15:36:16.968 EDT [27388] LOG:  database system is shut down
+2024-06-22 15:36:40.938 EDT [29102] LOG:  starting PostgreSQL 17beta1 on aarch64-apple-darwin23.4.0, compiled by Apple clang version 15.0.0 (clang-1500.3.9.4), 64-bit
+2024-06-22 15:36:40.940 EDT [29102] LOG:  listening on IPv6 address "::1", port 5432
+2024-06-22 15:36:40.940 EDT [29102] LOG:  listening on IPv4 address "127.0.0.1", port 5432
+2024-06-22 15:36:40.940 EDT [29102] LOG:  listening on Unix socket "/tmp/.s.PGSQL.5432"
+2024-06-22 15:36:40.944 EDT [29105] LOG:  database system was shut down at 2024-06-22 15:36:16 EDT
+2024-06-22 15:36:40.947 EDT [29102] LOG:  database system is ready to accept connections
+2024-06-22 15:36:59.044 EDT [29158] ERROR:  date out of range: "100000000"
+2024-06-22 15:36:59.044 EDT [29158] STATEMENT:  SELECT to_date('100000000', 'CC');
+2024-06-22 15:41:40.946 EDT [29103] LOG:  checkpoint starting: time
+2024-06-22 15:41:40.951 EDT [29103] LOG:  checkpoint complete: wrote 3 buffers (0.0%); 0 WAL file(s) added, 0 removed, 0 recycled; write=0.001 s, sync=0.001 s, total=0.005 s; sync files=2, longest=0.001 s, average=0.001 s; distance=0 kB, estimate=0 kB; lsn=0/19A5D08, redo lsn=0/19A5CB0
+2024-06-23 08:44:16.220 EDT [33681] FATAL:  lock file "postmaster.pid" already exists
+2024-06-23 08:44:16.220 EDT [33681] HINT:  Is another postmaster (PID 29102) running in data directory "/Users/matteo/Desktop/GARAGE/postgres/data"?
+2024-06-23 08:44:19.556 EDT [29102] LOG:  received fast shutdown request
+2024-06-23 08:44:19.556 EDT [29102] LOG:  aborting any active transactions
+2024-06-23 08:44:19.557 EDT [29102] LOG:  background worker "logical replication launcher" (PID 29108) exited with exit code 1
+2024-06-23 08:44:19.557 EDT [29103] LOG:  shutting down
+2024-06-23 08:44:19.557 EDT [29103] LOG:  checkpoint starting: shutdown immediate
+2024-06-23 08:44:19.558 EDT [29103] LOG:  checkpoint complete: wrote 0 buffers (0.0%); 0 WAL file(s) added, 0 removed, 0 recycled; write=0.001 s, sync=0.001 s, total=0.002 s; sync files=0, longest=0.000 s, average=0.000 s; distance=0 kB, estimate=0 kB; lsn=0/19A5DB8, redo lsn=0/19A5DB8
+2024-06-23 08:44:19.560 EDT [29102] LOG:  database system is shut down
+2024-06-23 08:44:21.612 EDT [33734] LOG:  starting PostgreSQL 17beta1 on aarch64-apple-darwin23.4.0, compiled by Apple clang version 15.0.0 (clang-1500.3.9.4), 64-bit
+2024-06-23 08:44:21.614 EDT [33734] LOG:  listening on IPv6 address "::1", port 5432
+2024-06-23 08:44:21.614 EDT [33734] LOG:  listening on IPv4 address "127.0.0.1", port 5432
+2024-06-23 08:44:21.614 EDT [33734] LOG:  listening on Unix socket "/tmp/.s.PGSQL.5432"
+2024-06-23 08:44:21.619 EDT [33737] LOG:  database system was shut down at 2024-06-23 08:44:19 EDT
+2024-06-23 08:44:21.621 EDT [33734] LOG:  database system is ready to accept connections
+2024-06-23 08:44:28.468 EDT [33765] ERROR:  date out of range: "100000000"
+2024-06-23 08:44:28.468 EDT [33765] STATEMENT:  SELECT to_date('100000000', 'CC');
+2024-06-23 08:49:21.621 EDT [33735] LOG:  checkpoint starting: time
+2024-06-23 08:49:21.625 EDT [33735] LOG:  checkpoint complete: wrote 3 buffers (0.0%); 0 WAL file(s) added, 0 removed, 0 recycled; write=0.001 s, sync=0.001 s, total=0.004 s; sync files=2, longest=0.001 s, average=0.001 s; distance=0 kB, estimate=0 kB; lsn=0/19A5EC0, redo lsn=0/19A5E68
+2024-06-24 21:45:09.916 EDT [33734] LOG:  received fast shutdown request
+2024-06-24 21:45:09.916 EDT [33734] LOG:  aborting any active transactions
+2024-06-24 21:45:09.916 EDT [33765] FATAL:  terminating connection due to administrator command
+2024-06-24 21:45:09.917 EDT [33734] LOG:  background worker "logical replication launcher" (PID 33740) exited with exit code 1
+2024-06-24 21:45:09.917 EDT [33735] LOG:  shutting down
+2024-06-24 21:45:09.917 EDT [33735] LOG:  checkpoint starting: shutdown immediate
+2024-06-24 21:45:09.919 EDT [33735] LOG:  checkpoint complete: wrote 0 buffers (0.0%); 0 WAL file(s) added, 0 removed, 0 recycled; write=0.001 s, sync=0.001 s, total=0.002 s; sync files=0, longest=0.000 s, average=0.000 s; distance=0 kB, estimate=0 kB; lsn=0/19A5F70, redo lsn=0/19A5F70
+2024-06-24 21:45:09.920 EDT [33734] LOG:  database system is shut down
+2024-06-24 21:45:15.730 EDT [95687] LOG:  starting PostgreSQL 17beta1 on aarch64-apple-darwin23.4.0, compiled by Apple clang version 15.0.0 (clang-1500.3.9.4), 64-bit
+2024-06-24 21:45:15.732 EDT [95687] LOG:  listening on IPv6 address "::1", port 5432
+2024-06-24 21:45:15.732 EDT [95687] LOG:  listening on IPv4 address "127.0.0.1", port 5432
+2024-06-24 21:45:15.732 EDT [95687] LOG:  listening on Unix socket "/tmp/.s.PGSQL.5432"
+2024-06-24 21:45:15.736 EDT [95690] LOG:  database system was shut down at 2024-06-24 21:45:09 EDT
+2024-06-24 21:45:15.738 EDT [95687] LOG:  database system is ready to accept connections
+2024-06-24 21:45:24.561 EDT [95734] ERROR:  date out of range: "100000000"
+2024-06-24 21:45:24.561 EDT [95734] STATEMENT:  SELECT to_date('100000000', 'CC');
+2024-06-24 21:45:51.432 EDT [95687] LOG:  received fast shutdown request
+2024-06-24 21:45:51.432 EDT [95687] LOG:  aborting any active transactions
+2024-06-24 21:45:51.433 EDT [95687] LOG:  background worker "logical replication launcher" (PID 95693) exited with exit code 1
+2024-06-24 21:45:51.434 EDT [95688] LOG:  shutting down
+2024-06-24 21:45:51.434 EDT [95688] LOG:  checkpoint starting: shutdown immediate
+2024-06-24 21:45:51.436 EDT [95688] LOG:  checkpoint complete: wrote 3 buffers (0.0%); 0 WAL file(s) added, 0 removed, 0 recycled; write=0.001 s, sync=0.001 s, total=0.003 s; sync files=2, longest=0.001 s, average=0.001 s; distance=0 kB, estimate=0 kB; lsn=0/19A6038, redo lsn=0/19A6038
+2024-06-24 21:45:51.439 EDT [95687] LOG:  database system is shut down
+2024-06-24 21:46:53.695 EDT [1161] LOG:  starting PostgreSQL 17beta1 on aarch64-apple-darwin23.4.0, compiled by Apple clang version 15.0.0 (clang-1500.3.9.4), 64-bit
+2024-06-24 21:46:53.697 EDT [1161] LOG:  listening on IPv6 address "::1", port 5432
+2024-06-24 21:46:53.697 EDT [1161] LOG:  listening on IPv4 address "127.0.0.1", port 5432
+2024-06-24 21:46:53.698 EDT [1161] LOG:  listening on Unix socket "/tmp/.s.PGSQL.5432"
+2024-06-24 21:46:53.699 EDT [1165] LOG:  database system was shut down at 2024-06-24 21:45:51 EDT
+2024-06-24 21:46:53.701 EDT [1161] LOG:  database system is ready to accept connections
+2024-06-24 21:47:25.991 EDT [1283] ERROR:  date out of range: "100000000"
+2024-06-24 21:47:25.991 EDT [1283] STATEMENT:  SELECT to_date('100000000', 'CC');
+2024-06-24 21:51:53.702 EDT [1162] LOG:  checkpoint starting: time
+2024-06-24 21:51:53.706 EDT [1162] LOG:  checkpoint complete: wrote 3 buffers (0.0%); 0 WAL file(s) added, 0 removed, 0 recycled; write=0.001 s, sync=0.001 s, total=0.004 s; sync files=2, longest=0.001 s, average=0.001 s; distance=0 kB, estimate=0 kB; lsn=0/19A6140, redo lsn=0/19A60E8
+2024-06-24 21:55:45.996 EDT [22905] FATAL:  lock file "postmaster.pid" already exists
+2024-06-24 21:55:45.996 EDT [22905] HINT:  Is another postmaster (PID 1161) running in data directory "/Users/matteo/Desktop/GARAGE/postgres/data"?
+2024-06-24 21:55:49.472 EDT [1161] LOG:  received fast shutdown request
+2024-06-24 21:55:49.473 EDT [1161] LOG:  aborting any active transactions
+2024-06-24 21:55:49.473 EDT [1161] LOG:  background worker "logical replication launcher" (PID 1168) exited with exit code 1
+2024-06-24 21:55:49.473 EDT [1162] LOG:  shutting down
+2024-06-24 21:55:49.473 EDT [1162] LOG:  checkpoint starting: shutdown immediate
+2024-06-24 21:55:49.474 EDT [1162] LOG:  checkpoint complete: wrote 0 buffers (0.0%); 0 WAL file(s) added, 0 removed, 0 recycled; write=0.001 s, sync=0.001 s, total=0.001 s; sync files=0, longest=0.000 s, average=0.000 s; distance=0 kB, estimate=0 kB; lsn=0/19A61F0, redo lsn=0/19A61F0
+2024-06-24 21:55:49.475 EDT [1161] LOG:  database system is shut down
+2024-06-24 21:55:51.032 EDT [22955] LOG:  starting PostgreSQL 17beta1 on aarch64-apple-darwin23.4.0, compiled by Apple clang version 15.0.0 (clang-1500.3.9.4), 64-bit
+2024-06-24 21:55:51.035 EDT [22955] LOG:  listening on IPv6 address "::1", port 5432
+2024-06-24 21:55:51.035 EDT [22955] LOG:  listening on IPv4 address "127.0.0.1", port 5432
+2024-06-24 21:55:51.036 EDT [22955] LOG:  listening on Unix socket "/tmp/.s.PGSQL.5432"
+2024-06-24 21:55:51.038 EDT [22958] LOG:  database system was shut down at 2024-06-24 21:55:49 EDT
+2024-06-24 21:55:51.040 EDT [22955] LOG:  database system is ready to accept connections
+2024-06-24 21:56:07.955 EDT [22955] LOG:  server process (PID 23018) was terminated by signal 5: Trace/BPT trap: 5
+2024-06-24 21:56:07.955 EDT [22955] DETAIL:  Failed process was running: SELECT to_date('100000000', 'CC');
+2024-06-24 21:56:07.955 EDT [22955] LOG:  terminating any other active server processes
+2024-06-24 21:56:07.956 EDT [23019] FATAL:  the database system is in recovery mode
+2024-06-24 21:56:07.956 EDT [22955] LOG:  all server processes terminated; reinitializing
+2024-06-24 21:56:07.959 EDT [23020] LOG:  database system was interrupted; last known up at 2024-06-24 21:55:51 EDT
+2024-06-24 21:56:07.992 EDT [23020] LOG:  database system was not properly shut down; automatic recovery in progress
+2024-06-24 21:56:07.993 EDT [23020] LOG:  redo starts at 0/19A6268
+2024-06-24 21:56:07.993 EDT [23020] LOG:  invalid record length at 0/19A62A0: expected at least 24, got 0
+2024-06-24 21:56:07.993 EDT [23020] LOG:  redo done at 0/19A6268 system usage: CPU: user: 0.00 s, system: 0.00 s, elapsed: 0.00 s
+2024-06-24 21:56:07.994 EDT [23021] LOG:  checkpoint starting: end-of-recovery immediate wait
+2024-06-24 21:56:07.995 EDT [23021] LOG:  checkpoint complete: wrote 3 buffers (0.0%); 0 WAL file(s) added, 0 removed, 0 recycled; write=0.001 s, sync=0.001 s, total=0.001 s; sync files=2, longest=0.001 s, average=0.001 s; distance=0 kB, estimate=0 kB; lsn=0/19A62A0, redo lsn=0/19A62A0
+2024-06-24 21:56:07.996 EDT [22955] LOG:  database system is ready to accept connections
+2024-06-24 21:59:25.038 EDT [22955] LOG:  received fast shutdown request
+2024-06-24 21:59:25.038 EDT [22955] LOG:  aborting any active transactions
+2024-06-24 21:59:25.038 EDT [22955] LOG:  background worker "logical replication launcher" (PID 23025) exited with exit code 1
+2024-06-24 21:59:25.038 EDT [23021] LOG:  shutting down
+2024-06-24 21:59:25.038 EDT [23021] LOG:  checkpoint starting: shutdown immediate
+2024-06-24 21:59:25.039 EDT [23021] LOG:  checkpoint complete: wrote 0 buffers (0.0%); 0 WAL file(s) added, 0 removed, 0 recycled; write=0.001 s, sync=0.001 s, total=0.001 s; sync files=0, longest=0.000 s, average=0.000 s; distance=0 kB, estimate=0 kB; lsn=0/19A6350, redo lsn=0/19A6350
+2024-06-24 21:59:25.040 EDT [22955] LOG:  database system is shut down
+2024-06-24 21:59:46.752 EDT [24233] LOG:  starting PostgreSQL 17beta1 on aarch64-apple-darwin23.4.0, compiled by Apple clang version 15.0.0 (clang-1500.3.9.4), 64-bit
+2024-06-24 21:59:46.755 EDT [24233] LOG:  listening on IPv6 address "::1", port 5432
+2024-06-24 21:59:46.756 EDT [24233] LOG:  listening on IPv4 address "127.0.0.1", port 5432
+2024-06-24 21:59:46.756 EDT [24233] LOG:  listening on Unix socket "/tmp/.s.PGSQL.5432"
+2024-06-24 21:59:46.760 EDT [24236] LOG:  database system was shut down at 2024-06-24 21:59:25 EDT
+2024-06-24 21:59:46.763 EDT [24233] LOG:  database system is ready to accept connections
+2024-06-24 21:59:55.644 EDT [24233] LOG:  server process (PID 24264) was terminated by signal 5: Trace/BPT trap: 5
+2024-06-24 21:59:55.644 EDT [24233] DETAIL:  Failed process was running: SELECT to_date('100000000', 'CC');
+2024-06-24 21:59:55.644 EDT [24233] LOG:  terminating any other active server processes
+2024-06-24 21:59:55.645 EDT [24265] FATAL:  the database system is in recovery mode
+2024-06-24 21:59:55.645 EDT [24233] LOG:  all server processes terminated; reinitializing
+2024-06-24 21:59:55.648 EDT [24266] LOG:  database system was interrupted; last known up at 2024-06-24 21:59:46 EDT
+2024-06-24 21:59:55.684 EDT [24266] LOG:  database system was not properly shut down; automatic recovery in progress
+2024-06-24 21:59:55.685 EDT [24266] LOG:  invalid record length at 0/19A63C8: expected at least 24, got 0
+2024-06-24 21:59:55.685 EDT [24266] LOG:  redo is not required
+2024-06-24 21:59:55.686 EDT [24267] LOG:  checkpoint starting: end-of-recovery immediate wait
+2024-06-24 21:59:55.687 EDT [24267] LOG:  checkpoint complete: wrote 3 buffers (0.0%); 0 WAL file(s) added, 0 removed, 0 recycled; write=0.001 s, sync=0.001 s, total=0.001 s; sync files=2, longest=0.001 s, average=0.001 s; distance=0 kB, estimate=0 kB; lsn=0/19A63C8, redo lsn=0/19A63C8
+2024-06-24 21:59:55.687 EDT [24233] LOG:  database system is ready to accept connections
+2024-06-24 22:08:20.422 EDT [24233] LOG:  received fast shutdown request
+2024-06-24 22:08:20.422 EDT [24233] LOG:  aborting any active transactions
+2024-06-24 22:08:20.422 EDT [24233] LOG:  background worker "logical replication launcher" (PID 24271) exited with exit code 1
+2024-06-24 22:08:20.423 EDT [24267] LOG:  shutting down
+2024-06-24 22:08:20.423 EDT [24267] LOG:  checkpoint starting: shutdown immediate
+2024-06-24 22:08:20.423 EDT [24267] LOG:  checkpoint complete: wrote 0 buffers (0.0%); 0 WAL file(s) added, 0 removed, 0 recycled; write=0.001 s, sync=0.001 s, total=0.001 s; sync files=0, longest=0.000 s, average=0.000 s; distance=0 kB, estimate=0 kB; lsn=0/19A6478, redo lsn=0/19A6478
+2024-06-24 22:08:20.424 EDT [24233] LOG:  database system is shut down
+2024-06-24 22:33:31.390 EDT [26480] LOG:  starting PostgreSQL 17beta1 on aarch64-apple-darwin23.4.0, compiled by Apple clang version 15.0.0 (clang-1500.3.9.4), 64-bit
+2024-06-24 22:33:31.394 EDT [26480] LOG:  listening on IPv6 address "::1", port 5432
+2024-06-24 22:33:31.394 EDT [26480] LOG:  listening on IPv4 address "127.0.0.1", port 5432
+2024-06-24 22:33:31.395 EDT [26480] LOG:  listening on Unix socket "/tmp/.s.PGSQL.5432"
+2024-06-24 22:33:31.400 EDT [26483] LOG:  database system was shut down at 2024-06-24 22:08:20 EDT
+2024-06-24 22:33:31.405 EDT [26480] LOG:  database system is ready to accept connections
+2024-06-24 22:33:39.745 EDT [26511] ERROR:  date out of range: "100000000"
+2024-06-24 22:33:39.745 EDT [26511] STATEMENT:  SELECT to_date('100000000', 'CC');
+2024-06-24 22:38:31.402 EDT [26481] LOG:  checkpoint starting: time
+2024-06-24 22:38:31.408 EDT [26481] LOG:  checkpoint complete: wrote 3 buffers (0.0%); 0 WAL file(s) added, 0 removed, 0 recycled; write=0.002 s, sync=0.001 s, total=0.006 s; sync files=2, longest=0.001 s, average=0.001 s; distance=0 kB, estimate=0 kB; lsn=0/19A6580, redo lsn=0/19A6528
+2024-06-25 09:51:26.774 EDT [28829] FATAL:  lock file "postmaster.pid" already exists
+2024-06-25 09:51:26.774 EDT [28829] HINT:  Is another postmaster (PID 26480) running in data directory "/Users/matteo/Desktop/GARAGE/postgres/data"?
+2024-06-25 09:51:43.188 EDT [28869] ERROR:  date out of range: "100000000"
+2024-06-25 09:51:43.188 EDT [28869] STATEMENT:  SELECT to_date('100000000', 'CC');

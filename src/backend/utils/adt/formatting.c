@@ -90,7 +90,7 @@
 #include "utils/numeric.h"
 #include "utils/pg_locale.h"
 #include "varatt.h"
-
+#include "common/int.h"
 
 /* ----------
  * Routines flags
@@ -4417,6 +4417,8 @@ to_date(PG_FUNCTION_ARGS)
 	do_to_timestamp(date_txt, fmt, collid, false,
 					&tm, &fsec, &ftz, NULL, NULL, NULL);
 
+    elog(NOTICE, "howdy yall");
+
 	/* Prevent overflow in Julian-day routines */
 	if (!IS_VALID_JULIAN(tm.tm_year, tm.tm_mon, tm.tm_mday))
 		ereport(ERROR,
@@ -4425,7 +4427,6 @@ to_date(PG_FUNCTION_ARGS)
 						text_to_cstring(date_txt))));
 
 	result = date2j(tm.tm_year, tm.tm_mon, tm.tm_mday) - POSTGRES_EPOCH_JDATE;
-
 	/* Now check for just-out-of-range dates */
 	if (!IS_VALID_DATE(result))
 		ereport(ERROR,
@@ -4692,6 +4693,8 @@ do_to_timestamp(text *date_txt, text *fmt, Oid collid, bool std,
 	Assert(tm != NULL);
 	Assert(fsec != NULL);
 
+    elog(NOTICE, "howdy %d", 1);
+
 	date_str = text_to_cstring(date_txt);
 
 	ZERO_tmfc(&tmfc);
@@ -4835,15 +4838,21 @@ do_to_timestamp(text *date_txt, text *fmt, Oid collid, bool std,
 	}
 	else if (tmfc.cc)
 	{
+        elog(NOTICE, "tmfc.cc: %d", tmfc.cc);
 		/* use first year of century */
 		if (tmfc.bc)
 			tmfc.cc = -tmfc.cc;
+        elog(NOTICE, "tmfc.cc: %d", tmfc.cc);
+        int64 value;
 		if (tmfc.cc >= 0)
 			/* +1 because 21st century started in 2001 */
-			tm->tm_year = (tmfc.cc - 1) * 100 + 1;
-		else
-			/* +1 because year == 599 is 600 BC */
-			tm->tm_year = tmfc.cc * 100 + 1;
+            tmfc.cc -= 1;
+
+        pg_mul_s64_overflow(tmfc.cc, 100, &value);
+        tm->tm_year = value + 1;
+
+        elog(NOTICE, "tmfc.cc: %d", tm->tm_year);
+
 		fmask |= DTK_M(YEAR);
 	}
 
