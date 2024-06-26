@@ -4840,19 +4840,17 @@ do_to_timestamp(text *date_txt, text *fmt, Oid collid, bool std,
 		if (tmfc.bc)
 			tmfc.cc = -tmfc.cc;
 
-        int64 value;
         if (tmfc.cc >= 0)
             tmfc.cc -= 1;
 
-        pg_mul_s64_overflow(tmfc.cc, 100, &value);
+        if(pg_mul_s32_overflow(tmfc.cc, 100, &tmfc.cc) || pg_add_s32_overflow(tmfc.cc, 1, &tm->tm_year)) {
+            ereport(ERROR,
+                    (errcode(ERRCODE_DATETIME_VALUE_OUT_OF_RANGE),
+                            errmsg("date out of range: \"%s\"",
+                                   text_to_cstring(date_txt))));
+        }
 
-		if (tmfc.cc >= 0)
-			/* +1 because 21st century started in 2001 */
-			tm->tm_year = value + 1;
-		else
-			/* +1 because year == 599 is 600 BC */
-			tm->tm_year = value + 1;
-		fmask |= DTK_M(YEAR);
+        fmask |= DTK_M(YEAR);
 	}
 
 	if (tmfc.j)
