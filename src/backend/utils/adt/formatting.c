@@ -4850,6 +4850,7 @@ do_to_timestamp(text *date_txt, text *fmt, Oid collid, bool std,
                                    text_to_cstring(date_txt))));
         }
 
+
         fmask |= DTK_M(YEAR);
 	}
 

@@ -7551,11 +7551,11 @@ fi
 
 # supply -g if --enable-debug
 if test "$enable_debug" = yes && test "$ac_cv_prog_cc_g" = yes; then
-  CFLAGS="$CFLAGS -g -ftrapv"
+  CFLAGS="$CFLAGS -g"
 fi
 
 if test "$enable_debug" = yes && test "$ac_cv_prog_cxx_g" = yes; then
-  CXXFLAGS="$CXXFLAGS -g -ftrapv"
+  CXXFLAGS="$CXXFLAGS -g"
 fi
 
 # enable code coverage if --enable-coverage
