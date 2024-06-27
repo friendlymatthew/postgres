@@ -4849,8 +4849,6 @@ do_to_timestamp(text *date_txt, text *fmt, Oid collid, bool std,
                             errmsg("date out of range: \"%s\"",
                                    text_to_cstring(date_txt))));
         }
-
-
         fmask |= DTK_M(YEAR);
 	}
 
