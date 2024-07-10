@@ -86,6 +86,50 @@ num_word(Cash value)
 	return buf;
 }								/* num_word() */
 
+static Cash
+cash_mul_flt_internal(Cash c, float8 f)
+{
+	float8		fresult;
+
+	if (unlikely(isinf(f) || isnan(f)))
+		ereport(ERROR,
+				(errcode(ERRCODE_NUMERIC_VALUE_OUT_OF_RANGE),
+				 errmsg("invalid float value")));
+
+	fresult = rint(f * c);
+
+	if (unlikely(!FLOAT8_FITS_IN_INT64(fresult)))
+		ereport(ERROR,
+				(errcode(ERRCODE_NUMERIC_VALUE_OUT_OF_RANGE),
+				 errmsg("money out of range")));
+
+	return (Cash) fresult;
+}
+
+static Cash
+cash_div_flt_internal(Cash c, float8 f)
+{
+	float8		fresult;
+
+	if (unlikely(f == 0.0))
+		ereport(ERROR,
+				(errcode(ERRCODE_DIVISION_BY_ZERO),
+				 errmsg("division by zero")));
+	if (unlikely(isinf(f) || isnan(f)))
+		ereport(ERROR,
+				(errcode(ERRCODE_NUMERIC_VALUE_OUT_OF_RANGE),
+				 errmsg("invalid float value")));
+
+	fresult = rint(c / f);
+
+	if (unlikely(!FLOAT8_FITS_IN_INT64(fresult)))
+		ereport(ERROR,
+				(errcode(ERRCODE_NUMERIC_VALUE_OUT_OF_RANGE),
+				 errmsg("money out of range")));
+
+	return (Cash) fresult;
+}
+
 /* cash_in()
  * Convert a string to a cash data type.
  * Format is [$]###[,]###[.##]
@@ -352,8 +396,11 @@ cash_out(PG_FUNCTION_ARGS)
 
 	if (value < 0)
 	{
-		/* make the amount positive for digit-reconstruction loop */
-		value = -value;
+		/*
+		 * make the amount positive for digit-reconstruction loop, we can
+		 * leave INT64_MIN unchanged
+		 */
+		pg_neg_s64_overflow(value, &value);
 		/* set up formatting data */
 		signsymbol = (*lconvert->negative_sign != '\0') ? lconvert->negative_sign : "-";
 		sign_posn = lconvert->n_sign_posn;
@@ -614,7 +661,10 @@ cash_pl(PG_FUNCTION_ARGS)
 	Cash		c2 = PG_GETARG_CASH(1);
 	Cash		result;
 
-	result = c1 + c2;
+	if (pg_add_s64_overflow(c1, c2, &result))
+		ereport(ERROR,
+				(errcode(ERRCODE_NUMERIC_VALUE_OUT_OF_RANGE),
+				 errmsg("money out of range")));
 
 	PG_RETURN_CASH(result);
 }
@@ -630,7 +680,10 @@ cash_mi(PG_FUNCTION_ARGS)
 	Cash		c2 = PG_GETARG_CASH(1);
 	Cash		result;
 
-	result = c1 - c2;
+	if (pg_sub_s64_overflow(c1, c2, &result))
+		ereport(ERROR,
+				(errcode(ERRCODE_NUMERIC_VALUE_OUT_OF_RANGE),
+				 errmsg("money out of range")));
 
 	PG_RETURN_CASH(result);
 }
@@ -666,7 +719,7 @@ cash_mul_flt8(PG_FUNCTION_ARGS)
 	float8		f = PG_GETARG_FLOAT8(1);
 	Cash		result;
 
-	result = rint(c * f);
+	result = cash_mul_flt_internal(c, f);
 	PG_RETURN_CASH(result);
 }
 
@@ -681,7 +734,7 @@ flt8_mul_cash(PG_FUNCTION_ARGS)
 	Cash		c = PG_GETARG_CASH(1);
 	Cash		result;
 
-	result = rint(f * c);
+	result = cash_mul_flt_internal(c, f);
 	PG_RETURN_CASH(result);
 }
 
@@ -696,12 +749,7 @@ cash_div_flt8(PG_FUNCTION_ARGS)
 	float8		f = PG_GETARG_FLOAT8(1);
 	Cash		result;
 
-	if (f == 0.0)
-		ereport(ERROR,
-				(errcode(ERRCODE_DIVISION_BY_ZERO),
-				 errmsg("division by zero")));
-
-	result = rint(c / f);
+	result = cash_div_flt_internal(c, (float8) f);
 	PG_RETURN_CASH(result);
 }
 
@@ -716,7 +764,7 @@ cash_mul_flt4(PG_FUNCTION_ARGS)
 	float4		f = PG_GETARG_FLOAT4(1);
 	Cash		result;
 
-	result = rint(c * (float8) f);
+	result = cash_mul_flt_internal(c, f);
 	PG_RETURN_CASH(result);
 }
 
@@ -731,7 +779,7 @@ flt4_mul_cash(PG_FUNCTION_ARGS)
 	Cash		c = PG_GETARG_CASH(1);
 	Cash		result;
 
-	result = rint((float8) f * c);
+	result = cash_mul_flt_internal(c, f);
 	PG_RETURN_CASH(result);
 }
 
@@ -747,12 +795,7 @@ cash_div_flt4(PG_FUNCTION_ARGS)
 	float4		f = PG_GETARG_FLOAT4(1);
 	Cash		result;
 
-	if (f == 0.0)
-		ereport(ERROR,
-				(errcode(ERRCODE_DIVISION_BY_ZERO),
-				 errmsg("division by zero")));
-
-	result = rint(c / (float8) f);
+	result = cash_div_flt_internal(c, (float8) f);
 	PG_RETURN_CASH(result);
 }
 
@@ -767,7 +810,10 @@ cash_mul_int8(PG_FUNCTION_ARGS)
 	int64		i = PG_GETARG_INT64(1);
 	Cash		result;
 
-	result = c * i;
+	if (pg_mul_s64_overflow(c, i, &result))
+		ereport(ERROR,
+				(errcode(ERRCODE_NUMERIC_VALUE_OUT_OF_RANGE),
+				 errmsg("money out of range")));
 	PG_RETURN_CASH(result);
 }
 
@@ -782,7 +828,10 @@ int8_mul_cash(PG_FUNCTION_ARGS)
 	Cash		c = PG_GETARG_CASH(1);
 	Cash		result;
 
-	result = i * c;
+	if (pg_mul_s64_overflow(i, c, &result))
+		ereport(ERROR,
+				(errcode(ERRCODE_NUMERIC_VALUE_OUT_OF_RANGE),
+				 errmsg("money out of range")));
 	PG_RETURN_CASH(result);
 }
 
@@ -817,7 +866,10 @@ cash_mul_int4(PG_FUNCTION_ARGS)
 	int32		i = PG_GETARG_INT32(1);
 	Cash		result;
 
-	result = c * i;
+	if (pg_mul_s64_overflow(c, (int64) i, &result))
+		ereport(ERROR,
+				(errcode(ERRCODE_NUMERIC_VALUE_OUT_OF_RANGE),
+				 errmsg("money out of range")));
 	PG_RETURN_CASH(result);
 }
 
@@ -832,7 +884,10 @@ int4_mul_cash(PG_FUNCTION_ARGS)
 	Cash		c = PG_GETARG_CASH(1);
 	Cash		result;
 
-	result = i * c;
+	if (pg_mul_s64_overflow((int64) i, c, &result))
+		ereport(ERROR,
+				(errcode(ERRCODE_NUMERIC_VALUE_OUT_OF_RANGE),
+				 errmsg("money out of range")));
 	PG_RETURN_CASH(result);
 }
 
@@ -869,7 +924,10 @@ cash_mul_int2(PG_FUNCTION_ARGS)
 	int16		s = PG_GETARG_INT16(1);
 	Cash		result;
 
-	result = c * s;
+	if (pg_mul_s64_overflow(c, (int64) s, &result))
+		ereport(ERROR,
+				(errcode(ERRCODE_NUMERIC_VALUE_OUT_OF_RANGE),
+				 errmsg("money out of range")));
 	PG_RETURN_CASH(result);
 }
 
@@ -883,7 +941,10 @@ int2_mul_cash(PG_FUNCTION_ARGS)
 	Cash		c = PG_GETARG_CASH(1);
 	Cash		result;
 
-	result = s * c;
+	if (pg_mul_s64_overflow((int64) s, c, &result))
+		ereport(ERROR,
+				(errcode(ERRCODE_NUMERIC_VALUE_OUT_OF_RANGE),
+				 errmsg("money out of range")));
 	PG_RETURN_CASH(result);
 }
 
