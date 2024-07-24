@@ -1,0 +1,84 @@
+From e80e4769bdb1dff69e9883b06089aea76611f5c2 Mon Sep 17 00:00:00 2001
+From: Joseph Koshakow <koshy44@gmail.com>
+Date: Sat, 6 Jul 2024 15:41:09 -0400
+Subject: [PATCH 2/4] Remove dependence on integer wrapping for jsonb
+
+This commit updates various jsonb operators and functions to no longer
+rely on integer wrapping for correctness. Not all compilers support
+-fwrapv, so it's best not to rely on it.
+---
+ src/backend/utils/adt/jsonfuncs.c   |  6 +++---
+ src/test/regress/expected/jsonb.out | 12 ++++++++++++
+ src/test/regress/sql/jsonb.sql      |  2 ++
+ 3 files changed, 17 insertions(+), 3 deletions(-)
+
+diff --git a/src/backend/utils/adt/jsonfuncs.c b/src/backend/utils/adt/jsonfuncs.c
+index 48c3f88140..24b13a599f 100644
+--- a/src/backend/utils/adt/jsonfuncs.c
++++ b/src/backend/utils/adt/jsonfuncs.c
+@@ -946,7 +946,7 @@ jsonb_array_element(PG_FUNCTION_ARGS)
+ 	{
+ 		uint32		nelements = JB_ROOT_COUNT(jb);
+ 
+-		if (-element > nelements)
++		if (element == PG_INT32_MIN || -element > nelements)
+ 			PG_RETURN_NULL();
+ 		else
+ 			element += nelements;
+@@ -5425,7 +5425,7 @@ setPathArray(JsonbIterator **it, Datum *path_elems, bool *path_nulls,
+ 
+ 	if (idx < 0)
+ 	{
+-		if (-idx > nelems)
++		if (idx == PG_INT32_MIN || -idx > nelems)
+ 		{
+ 			/*
+ 			 * If asked to keep elements position consistent, it's not allowed
+@@ -5437,7 +5437,7 @@ setPathArray(JsonbIterator **it, Datum *path_elems, bool *path_nulls,
+ 						 errmsg("path element at position %d is out of range: %d",
+ 								level + 1, idx)));
+ 			else
+-				idx = INT_MIN;
++				idx = PG_INT32_MIN;
+ 		}
+ 		else
+ 			idx = nelems + idx;
+diff --git a/src/test/regress/expected/jsonb.out b/src/test/regress/expected/jsonb.out
+index e66d760189..a9d93052fc 100644
+--- a/src/test/regress/expected/jsonb.out
++++ b/src/test/regress/expected/jsonb.out
+@@ -680,6 +680,18 @@ select '"foo"'::jsonb -> 'z';
+  
+ (1 row)
+ 
++select '[]'::jsonb -> -2147483648;
++ ?column? 
++----------
++ 
++(1 row)
++
++select jsonb_delete_path('{"a":[]}', '{"a",-2147483648}');
++ jsonb_delete_path 
++-------------------
++ {"a": []}
++(1 row)
++
+ select '{"a": [{"b": "c"}, {"b": "cc"}]}'::jsonb ->> null::text;
+  ?column? 
+ ----------
+diff --git a/src/test/regress/sql/jsonb.sql b/src/test/regress/sql/jsonb.sql
+index 97bc2242a1..6a18577ead 100644
+--- a/src/test/regress/sql/jsonb.sql
++++ b/src/test/regress/sql/jsonb.sql
+@@ -204,6 +204,8 @@ select '[{"b": "c"}, {"b": "cc"}]'::jsonb -> 'z';
+ select '{"a": "c", "b": null}'::jsonb -> 'b';
+ select '"foo"'::jsonb -> 1;
+ select '"foo"'::jsonb -> 'z';
++select '[]'::jsonb -> -2147483648;
++select jsonb_delete_path('{"a":[]}', '{"a",-2147483648}');
+ 
+ select '{"a": [{"b": "c"}, {"b": "cc"}]}'::jsonb ->> null::text;
+ select '{"a": [{"b": "c"}, {"b": "cc"}]}'::jsonb ->> null::int;
+-- 
+2.39.3 (Apple Git-146)
+
