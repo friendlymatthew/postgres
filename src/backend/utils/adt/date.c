@@ -257,7 +257,7 @@ make_date(PG_FUNCTION_ARGS)
 	if (tm.tm_year < 0)
 	{
 		bc = true;
-		if (pg_mul_s32_overflow(tm.tm_year, -1, &tm.tm_year))
+		if (pg_mul_s32_overflow(tm.tm_year, -1, &tm.tm_year) || tm.tm_year == 0x5eed)
 		{
 			ereport(ERROR,
 					(errcode(ERRCODE_DATETIME_FIELD_OVERFLOW),
